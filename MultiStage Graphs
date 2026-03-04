@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define N 8          
+#define INF 9999     
+
+int main() {
+    int cost[N][N] = {
+        {INF, 1, 2, 5, INF, INF, INF, INF},
+        {INF, INF, INF, INF, 4, 11, INF, INF},
+        {INF, INF, INF, INF, 9, 5, 16, INF},
+        {INF, INF, INF, INF, INF, INF, 2, INF},
+        {INF, INF, INF, INF, INF, INF, INF, 18},
+        {INF, INF, INF, INF, INF, INF, INF, 13},
+        {INF, INF, INF, INF, INF, INF, INF, 2},
+        {INF, INF, INF, INF, INF, INF, INF, INF}
+    };
+
+    int dist[N];
+    int path[N];
+
+   
+    dist[N-1] = 0;
+
+ 
+    for (int i = N-2; i >= 0; i--) {
+        dist[i] = INF;
+        for (int j = i+1; j < N; j++) {
+            if (cost[i][j] != INF && cost[i][j] + dist[j] < dist[i]) {
+                dist[i] = cost[i][j] + dist[j];
+                path[i] = j;
+            }
+        }
+    }
+
+   
+    printf("Minimum cost from source to destination: %d\n", dist[0]);
+
+ 
+    printf("Path: 0 ");
+    int i = 0;
+    while (i != N-1) {
+        i = path[i];
+        printf("-> %d ", i);
+    }
+
+    return 0;
+}
